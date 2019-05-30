@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: sample-web-ingress
+  labels:
+    group: nginx-ingress
+  namespace: nginx-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: developmnet-sample-web-svc
+          servicePort: 8080
+        path: /dev(/|$)(.*)
+      - backend:
+          serviceName: staging-sample-web-svc
+          servicePort: 8080
+        path: /stg(/|$)(.*)
+      - backend:
+          serviceName: production-sample-web-svc
+          servicePort: 8080
+        path: /prod(/|$)(.*)
